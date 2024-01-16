@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/boltdb/bolt"
-	"github.com/evepraisal/go-evepraisal"
 	"github.com/golang/snappy"
+	"github.com/hermesdj/go-evepraisal"
 )
 
 var expireCheckDuration = time.Hour * 24 * 80

@@ -16,10 +16,10 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/evepraisal/go-evepraisal"
-	"github.com/evepraisal/go-evepraisal/legacy"
-	"github.com/evepraisal/go-evepraisal/parsers"
 	"github.com/go-zoo/bone"
+	"github.com/hermesdj/go-evepraisal"
+	"github.com/hermesdj/go-evepraisal/legacy"
+	"github.com/hermesdj/go-evepraisal/parsers"
 	"github.com/mssola/user_agent"
 )
 
