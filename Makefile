@@ -70,4 +70,4 @@ dist:
 	ENV=PROD GOOS=linux GOARCH=amd64 make build
 
 deploy-prod: dist
-	USERNAME=root HOSTNAME=evepraisal.com ./scripts/deploy.sh
+	USERNAME=root HOSTNAME=evepraisal.jaysgaming.fr ./scripts/deploy.sh

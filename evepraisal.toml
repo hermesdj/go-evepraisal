@@ -1,9 +1,9 @@
 http_addr=":8080"
 https_addr=""
-management_addr="127.0.0.1:8090"
+management_addr="127.0.0.1:8081"
 http_redirect=false
 letsencrypt_email=""
-https_domain-whitelist=["evepraisal.com"]
+https_domain-whitelist=["evepraisal.jaysgaming.fr"]
 
 base-url="http://127.0.0.1:8080"
 
