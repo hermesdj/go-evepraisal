@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evepraisal
+  namespace: eve-corp
+  labels:
+    app: evepraisal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evepraisal
+  template:
+    metadata:
+      name: evepraisal
+      labels:
+        app: evepraisal
+    spec:
+      serviceAccountName: eve-corp-api-reader
+      restartPolicy: Always
+      volumes:
+        - name: evepraisal-config
+          configMap:
+            name: evepraisal-config
+        - name: evepraisal-db
+          persistentVolumeClaim:
+            claimName: evepraisal-db
+      containers:
+        - name: evepraisal
+          image: ghcr.io/hermesdj/go-evepraisal
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /evepraisal/evepraisal.toml
+              name: evepraisal-config
+              subPath: evepraisal.toml
+            - mountPath: /evepraisal/db
+              name: evepraisal-db
+          envFrom:
+            - secretRef:
+                name: evepraisal-secrets

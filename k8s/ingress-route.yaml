@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: evepraisal-ingress-route
+  namespace: eve-corp
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`evepraisal.jaysgaming.fr`)
+      kind: Rule
+      services:
+        - name: evepraisal-service
+          port: 8080
+  tls:
+    certResolver: jaysgaming
