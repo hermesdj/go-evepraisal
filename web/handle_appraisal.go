@@ -287,12 +287,25 @@ func (ctx *Context) HandleAppraisal(w http.ResponseWriter, r *http.Request) {
 	// Log for later analyics
 	log.Println(appraisal.Summary())
 
-	if r.Header.Get("format") == "json" {
-		r.Header["Content-Type"] = []string{"application/json"}
-		err := json.NewEncoder(w).Encode(appraisal)
-		if err != nil {
-			log.Printf("ERROR: Error formatting output as json: %s", err)
+	format := getRequestParam(r, "format")
+
+	if format == "json" {
+		w.Header().Add("Content-Type", "application/json")
+
+		rType := getRequestParam(r, "type")
+
+		if rType == "evaluation" {
+			err := json.NewEncoder(w).Encode(appraisal.Totals)
+			if err != nil {
+				log.Printf("ERROR: Error formatting output as json: %s", err)
+			}
+		} else {
+			err := json.NewEncoder(w).Encode(appraisal)
+			if err != nil {
+				log.Printf("ERROR: Error formatting output as json: %s", err)
+			}
 		}
+
 		return
 	}
 
