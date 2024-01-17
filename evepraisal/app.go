@@ -65,11 +65,11 @@ func appMain() {
 	httpClient.Concurrency = 1
 	httpClient.Timeout = 30 * time.Second
 	httpClient.Backoff = pester.ExponentialJitterBackoff
-	httpClient.MaxRetries = 10
+	httpClient.MaxRetries = 2
 	httpClient.LogHook = func(e pester.ErrEntry) { log.Println(httpClient.FormatError(e)) }
 
 	fetcherCtx, fetcherCancel := context.WithCancel(context.Background())
-	priceFetcher, err := esi.NewPriceFetcher(fetcherCtx, priceDB, viper.GetString("esi_baseurl"), httpClient)
+	priceFetcher, err := esi.NewPriceFetcher(fetcherCtx, priceDB, viper.GetString("esi_baseurl"), httpClient, viper.GetDuration("pooling_interval"))
 	if err != nil {
 		log.Fatalf("Couldn't start price fetcher: %s", err)
 	}

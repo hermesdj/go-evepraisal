@@ -23,4 +23,5 @@ func init() {
 	viper.SetDefault("sso-token-url", "https://login.eveonline.com/oauth/token")
 	viper.SetDefault("sso-verify-url", "https://login.eveonline.com/oauth/verify")
 	viper.SetDefault("sso-verify-url", "https://login.eveonline.com/oauth/verify")
+	viper.SetDefault("pooling_interval", "360") // 360 minutes = 6 hours
 }

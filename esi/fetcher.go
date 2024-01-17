@@ -75,8 +75,7 @@ type PriceFetcher struct {
 }
 
 // NewPriceFetcher returns a new PriceFetcher
-func NewPriceFetcher(ctx context.Context, priceDB evepraisal.PriceDB, baseURL string, client *pester.Client) (*PriceFetcher, error) {
-
+func NewPriceFetcher(ctx context.Context, priceDB evepraisal.PriceDB, baseURL string, client *pester.Client, poolInterval time.Duration) (*PriceFetcher, error) {
 	p := &PriceFetcher{
 		db:      priceDB,
 		client:  client,
@@ -94,7 +93,7 @@ func NewPriceFetcher(ctx context.Context, priceDB evepraisal.PriceDB, baseURL st
 			start := time.Now()
 			p.runOnce()
 			select {
-			case <-time.After((30 * time.Minute) - time.Since(start)):
+			case <-time.After((poolInterval * time.Minute) - time.Since(start)):
 			case <-p.stop:
 				return
 			}
