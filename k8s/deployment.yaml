@@ -27,7 +27,7 @@ spec:
             claimName: evepraisal-db
       containers:
         - name: evepraisal
-          image: ghcr.io/hermesdj/go-evepraisal:latest
+          image: ghcr.io/hermesdj/go-evepraisal:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

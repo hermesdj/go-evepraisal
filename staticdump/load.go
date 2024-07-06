@@ -53,6 +53,7 @@ func FindLastStaticDumpChecksum(client *pester.Client) (string, error) {
 }
 
 func downloadTypes(client *pester.Client, staticDumpURL string, staticDataPath string) error {
+	log.Printf("Creating directory %s", staticDataPath)
 	out, err := os.Create(staticDataPath)
 	defer func() {
 		_ = out.Close()
