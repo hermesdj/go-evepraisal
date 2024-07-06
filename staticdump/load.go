@@ -58,17 +58,20 @@ func downloadTypes(client *pester.Client, staticDumpURL string, staticDataPath s
 		_ = out.Close()
 	}()
 	if err != nil {
+		log.Printf("Error creating path on OS : %s", err)
 		return err
 	}
 
 	req, err := http.NewRequest("GET", staticDumpURL, nil)
 	if err != nil {
+		log.Printf("Error creating request http : %s", err)
 		return err
 	}
 
 	req.Header.Add("User-Agent", userAgent)
 	resp, err := client.Do(req)
 	if err != nil {
+		log.Printf("Error executing request http : %s", err)
 		return err
 	}
 	defer resp.Body.Close()
