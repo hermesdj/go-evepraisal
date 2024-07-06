@@ -127,14 +127,14 @@ func loadtypes(staticDataPath string) ([]typedb.EveType, error) {
 	defer r.Close()
 
 	var allTypes map[int64]Type
-	err = loadDataFromZipFile(r, "sde/fsd/typeIDs.yaml", &allTypes)
+	err = loadDataFromZipFile(r, "fsd/typeIDs.yaml", &allTypes)
 	if err != nil {
 		return nil, err
 	}
 	log.Printf("Loaded %d types", len(allTypes))
 
 	var allBlueprints map[int64]Blueprint
-	err = loadDataFromZipFile(r, "sde/fsd/blueprints.yaml", &allBlueprints)
+	err = loadDataFromZipFile(r, "fsd/blueprints.yaml", &allBlueprints)
 	if err != nil {
 		return nil, err
 	}
