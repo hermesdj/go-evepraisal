@@ -127,7 +127,7 @@ func loadtypes(staticDataPath string) ([]typedb.EveType, error) {
 	defer r.Close()
 
 	var allTypes map[int64]Type
-	err = loadDataFromZipFile(r, "fsd/typeIDs.yaml", &allTypes)
+	err = loadDataFromZipFile(r, "fsd/types.yaml", &allTypes)
 	if err != nil {
 		return nil, err
 	}
