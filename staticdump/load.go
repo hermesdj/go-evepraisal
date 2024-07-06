@@ -19,7 +19,7 @@ import (
 var userAgent = "go-evepraisal"
 
 func FindLastStaticDumpUrl(client *pester.Client) (string, error) {
-	return "https://eve-static-data-export.s3-eu-west-1.amazonaws.com/tranquility/sde.zip", nil
+	return "https://eve-static-data-export.s3-eu-west-1.amazonaws.com/tranquility/fsd.zip.checksum", nil
 }
 
 // FindLastStaticDumpChecksum returns the URL of the last eve static data dump
