@@ -97,6 +97,11 @@ func (f *StaticFetcher) RunOnce() error {
 	}
 	log.Println("done making new typedb")
 
+	e := os.Remove(typedbPath)
+	if e != nil {
+		log.Fatal(e)
+	}
+
 	f.callback(typeDB)
 	return nil
 }
