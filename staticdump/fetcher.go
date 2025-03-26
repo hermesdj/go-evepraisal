@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
@@ -62,12 +63,38 @@ func NewStaticFetcher(client *pester.Client, dbPath string, callback func(typeDB
 	return fetcher, nil
 }
 
+func ClearPreviousTypeDbs(dbPath string, currentChecksum string) error {
+	files, err := filepath.Glob(filepath.Join(dbPath, "types-*"))
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+
+	for _, file := range files {
+		if !strings.Contains(file, currentChecksum) {
+			log.Println("Deleting non matching checksum file", file)
+			err = os.RemoveAll(file)
+
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+
+	return nil
+}
+
 // RunOnce will fetch, parse and call the callback with a fresh type database
 func (f *StaticFetcher) RunOnce() error {
 	staticDumpChecksum, err := FindLastStaticDumpChecksum(f.client)
 	if err != nil {
 		// TODO: fallback to previously downloaded static data
 		return fmt.Errorf("error fetching static dump checksum: %w", err)
+	}
+
+	err = ClearPreviousTypeDbs(f.dbPath, staticDumpChecksum)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	staticDumpURL, err := FindLastStaticDumpUrl(f.client)
@@ -97,9 +124,12 @@ func (f *StaticFetcher) RunOnce() error {
 	}
 	log.Println("done making new typedb")
 
-	e := os.Remove(typedbPath)
-	if e != nil {
-		log.Fatal(e)
+	if _, err = os.Stat(typedbCachePath); err == nil {
+		err = os.Remove(typedbCachePath)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Println("done removing file", typedbCachePath)
 	}
 
 	f.callback(typeDB)
