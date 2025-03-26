@@ -76,7 +76,7 @@ func ClearPreviousTypeDbs(dbPath string, currentChecksum string) error {
 			err = os.RemoveAll(file)
 
 			if err != nil {
-				log.Fatal(err)
+				log.Println(err)
 			}
 		}
 	}
