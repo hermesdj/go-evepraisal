@@ -44,16 +44,7 @@ func FindLastStaticDumpChecksum(client *pester.Client) (string, error) {
 
 	switch resp.StatusCode {
 	case 200, 304:
-		lines := strings.Split(string(body), "\n")
-		for _, line := range lines {
-			if strings.Contains(line, "sde.zip") {
-				parts := strings.Fields(line)
-				if len(parts) > 0 {
-					return parts[0], nil
-				}
-			}
-		}
-		return "", errors.New("Checksum for sde.zip not found")
+		return string(body), nil
 	case 404:
 		return "", errors.New("Could not find latest static dump checksum (404)")
 	default:
