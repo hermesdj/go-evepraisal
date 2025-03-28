@@ -92,11 +92,6 @@ func (f *StaticFetcher) RunOnce() error {
 		return fmt.Errorf("error fetching static dump checksum: %w", err)
 	}
 
-	err = ClearPreviousTypeDbs(f.dbPath, staticDumpChecksum)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	staticDumpURL, err := FindLastStaticDumpUrl(f.client)
 	if err != nil {
 		// TODO: fallback to previously downloaded static data
